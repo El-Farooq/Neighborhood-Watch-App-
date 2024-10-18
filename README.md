@@ -79,6 +79,7 @@ Create a form in report.html where users can submit incidents.
 Use Express.js to handle form submissions and store the data in MySQL.
 Example code for storing an incident:
 javascript
+
 app.post('/report', (req, res) => {
     const { title, description, location, type } = req.body;
     const query = 'INSERT INTO incidents (title, description, location, type) VALUES (?, ?, ?, ?)';
@@ -87,10 +88,12 @@ app.post('/report', (req, res) => {
         res.redirect('/feed');
     });
 });
+
 Step 4: Build the Community Feed
 In feed.html, use HTML to create a structure that lists all incidents.
 In Node.js, create a route /feed that retrieves incidents from the MySQL database and displays them.
 javascript
+
 app.get('/feed', (req, res) => {
     const query = 'SELECT * FROM incidents';
     db.query(query, (err, results) => {
@@ -98,12 +101,14 @@ app.get('/feed', (req, res) => {
         res.render('feed', { incidents: results });
     });
 });
+
 Step 5: Create Incident Details Page
 When a user clicks on an incident in the feed, they should be taken to a page with the full details.
 Set up a route /incident/:id in Node.js that fetches the details of a specific incident from MySQL.
 Step 6: Add Notifications (Optional)
 Use Nodemailer in Node.js to send email notifications when a new incident is reported:
 javascript
+
 const nodemailer = require('nodemailer');
 // Create a transporter object
 let transporter = nodemailer.createTransport({
@@ -115,6 +120,7 @@ let transporter = nodemailer.createTransport({
 });
 
 // Send notification email
+
 app.post('/report', (req, res) => {
     const { title, description, location, type } = req.body;
     const query = 'INSERT INTO incidents (title, description, location, type) VALUES (?, ?, ?, ?)';
@@ -138,6 +144,7 @@ app.post('/report', (req, res) => {
         res.redirect('/feed');
     });
 });
+
 Step 7: Deploy (Optional)
 Deploy the app using a service like Heroku or Vercel.
 Ensure your MySQL database is hosted (you can use services like ClearDB for a MySQL database on Heroku).
@@ -147,6 +154,7 @@ Here’s an example of how your MySQL tables might look:
 
 Users Table:
 sql
+
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(100),
@@ -156,6 +164,7 @@ CREATE TABLE users (
 
 Incidents Table:
 sql
+
 CREATE TABLE incidents (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255),
